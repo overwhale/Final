@@ -6,7 +6,7 @@
 using namespace std;
 int main(){
     ParkingLot pl(30);
-    pl.initializeParkingLot(0);
+    pl.initialize(0);
     // set up a one to one connection between ParkingSpot and Car
     // so that we can find a car by the spot number or the other way.
     unordered_map<int, string> map;

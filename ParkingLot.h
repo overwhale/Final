@@ -33,7 +33,7 @@ public:
 
 public:
     ParkingLot(int c = 0, int n = 0) : compacity(c), numSpots(n) {}
-    void initializeParkingLot(int numDisabled);
+    void initialize(int numDisabled);
     bool isFull();
     int park(Car car);
 

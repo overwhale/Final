@@ -31,7 +31,7 @@ class ParkingLot {
     public:
         ParkingLot(int c = 0, int n =0): compacity(c), numSpots(n)  {}
     
-        void initializeParkingLot(int numDisabled){
+        void initialize(int numDisabled){
             if (numDisabled > this->compacity)
                 cerr << "Warning, too many spots than what we have.";
             for (int t = 0; t < this->compacity; t++) { 
