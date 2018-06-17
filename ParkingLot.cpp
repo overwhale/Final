@@ -1,79 +1,127 @@
-#include <iostream>
-#include <vector>
+#include "ParkingLot.h"
 
-using namespace std;
 class Vehicle{
 public:
-    int plate;
-    virtual int getPlate(){}
+    string plate;
+    virtual string getPlate(){}
     virtual ~Vehicle(){}
-    Vehicle(int n = 0) : plate(n){}
+    Vehicle(string n = "A") : plate(n){}
 };
 
-class Car : public Vehicle {
+class Car: public Vehicle {
 public:
     string type;
-    Car(int n = 0, string t = "suv") : Vehicle(n), type(t){}
+    Car(string n = "A", string t = "suv") : Vehicle(n), type(t){}
 
-    int getPlate(){ 
+    string getPlate(){ 
         return plate;
     }
+
+    friend class ParkingLot;
 };
 
-template<typename T>
+
 class ParkingLot {
-private:
-    vector<ParkingSpot> spots;
-    // compacity is a const number that how many cars can the lot hold
-    const int compacity;
-    // numSpots indicates how many spots are occupied in the lot.
-    int numSpots;
-private:
-    ParkingLot(int c = 0, int n =0): compacity(c), numSpots(n)  {}
-    void addSpot(ParkingSpot p){
-        spots.push_back(p);
-    }
+    class ParkingSpot;
+    public:
+        vector<ParkingSpot> spots;
+        const int compacity;
+        int numSpots;
 
-    int getOpenSpots(){
-        return compacity - numSpots;
-    }
-
-
-};
-
-template <typename T>
-class ParkingSpot{
-    private:
-        bool disabled; // whether the spot is for people with disability.
-        bool occupied;    // whether the spot is occupied.
-public:
-        T spotID;       // the id of the spot.
-
-        ParkingSpot(T ID, bool disabled) {
-            this->disabled = disabled;
-            occupied = false;
-            spotID = ID;
+    public:
+        ParkingLot(int c = 0, int n =0): compacity(c), numSpots(n)  {}
+    
+        void initializeParkingLot(int numDisabled){
+            if (numDisabled > this->compacity)
+                cerr << "Warning, too many spots than what we have.";
+            for (int t = 0; t < this->compacity; t++) { 
+                int i = 1000;
+                spots.addSpot([&i]() {return ParkingSpot(i, false); i++; });
+            }
+            for (auto t = spots.begin(); t != spots.begin() + numDisabled; t++) {
+                *t.setDisabled(true);
+            }
         }
 
-        // accessor
-        bool getDisabled(){
-            return disabled;
+        void addSpot(ParkingSpot p){
+            spots.push_back(p);
+        }
+
+        bool isFull(){
+            return compacity == numSpots;
+        }
+
+        int park(Car car) {
+            int ID;
+            if (!isFull()) {
+                cout << "Here are the available space: " << endl;
+                for_each(spots.begin(), spots.end(), printif());
+                cout << "Which one do you want: " << endl;
+                cin >> ID;
+                for (auto t = spots.begin(); t != spots.end(); t++) {
+                    if (*t.getID() == ID){
+                        *t.setOccupied(true);
+                        *t.setCar(car);
+                        return ID;
+                    }
+                }
+                return 0;
+            }
+            else {
+                cout << "Sorry! Lot is full." << endl;
+                return 0;
+            }
         }
         
-        bool getOccupied(){
+        void printif(ParkingSpot a) {
+            if (a.getOccupied() == false)
+                cout << a.getID() << "  ";
+        }
+
+
+    friend class Car;
+
+    class ParkingSpot {
+    public:
+        bool disabled;
+        bool occupied;
+        Car car;
+
+    public:
+        int spotID;
+
+        ParkingSpot(int id, bool disabled) {
+            this->disabled = disabled;
+            occupied = false;
+            spotID = id;
+        }
+
+        bool getDisabled() {
+            return disabled;
+        }
+
+        bool getOccupied() {
             return occupied;
         }
 
-        T getID(){
+        Car getCar(){
+            return car;
+        }
+
+        int getID() {
             return spotID;
         }
 
-        // mutator
-        void setDisabled(bool b){
-            disabled = b;
+        void setDisabled(bool b) {
+            this->disabled = b;
         }
 
-        void setOccupied(bool b){
-            occupied = b;
+        void setOccupied(bool b) {
+            this->occupied = b;
         }
+
+        void setCar(Car car){
+            this->car = car;
+        }
+    };
 };

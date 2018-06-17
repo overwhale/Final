@@ -18,6 +18,7 @@ or string or even a mix as the ID.
 
 Obviously, class ParkingLot is a vector of ParkingSpots that handles the overall parking lot.
 
-
+In the main function, which is basically one operation of the parking lot. I initialized the parking lot with a 
+lambda function because the initializing ID function will probabiliy be used for just once.
 The importance of move semantics and copy & swap couldn't really be shown in this program, because each spot
 and each vehicle is unique. So there does not involve much transfer of ownership between objects.
