@@ -7,8 +7,8 @@ using namespace std;
 class Vehicle {
 public:
     string plate;
-    virtual string getPlate() {}
-    virtual ~Vehicle() {}
+    string getPlate();
+    virtual ~Vehicle();
     Vehicle(string n = "A") : plate(n) {}
 };
 
@@ -16,7 +16,7 @@ class Car : public Vehicle {
 public:
     string type;
     Car(string n = "A", string t = "suv") : Vehicle(n), type(t) {}
-    string getPlate();
+    string getType();
     friend class ParkingLot;
 };
 
