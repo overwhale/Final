@@ -27,7 +27,28 @@ public:
 
 class ParkingLot {
     friend class Car;
-    class ParkingSpot;
+
+    class ParkingSpot {
+    public:
+        bool disabled;  // whether the spot is for people with disability.
+        bool occupied;  // whether the spot is occupied.
+        Car car;
+        struct printif;
+    public:
+        int spotID;       // the id of the spot.
+        ParkingSpot(int ID, bool disabled);
+        ParkingSpot(const ParkingSpot& a);
+        //ParkingSpot(ParkingSpot&& a);  move constructor
+        // accessor
+        bool getDisabled();
+        bool getOccupied();
+        Car getCar();
+        int getID();
+        // mutator
+        void setDisabled(bool b);
+        void setOccupied(bool b);
+        void setCar(Car car);
+    };
 
 public:
     vector<ParkingSpot> spots;
@@ -43,26 +64,4 @@ public:
     int park(Car car);
     void exit(int ID);
     void calculateFee(time_t t);
-
-    class ParkingSpot {
-    public:
-        bool disabled;  // whether the spot is for people with disability.
-        bool occupied;  // whether the spot is occupied.
-        Car car;
-        struct printif;
-    public:
-        int spotID;       // the id of the spot.
-        ParkingSpot(int ID, bool disabled);
-        ParkingSpot(const ParkingSpot& a); 
-        //ParkingSpot(ParkingSpot&& a);  move constructor
-        // accessor
-        bool getDisabled();
-        bool getOccupied();
-        Car getCar();
-        int getID();
-        // mutator
-        void setDisabled(bool b);
-        void setOccupied(bool b);
-        void setCar(Car car);
-    };
 };

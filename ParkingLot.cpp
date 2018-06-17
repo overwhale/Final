@@ -13,7 +13,7 @@ string Car::getType() {
 
 time_t Car::exitTime(){
     time_t exitT = std::time(0);
-    time_t duration = exitT - this->t;
+    return exitT - this->t;
 }
 
 bool ParkingLot::isFull() {
