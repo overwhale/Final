@@ -3,6 +3,8 @@
 #include <string>
 #include <algorithm>
 #include <functional>
+#include <ctime>
+
 using namespace std;
 class Vehicle {
 public:
@@ -15,8 +17,11 @@ public:
 class Car : public Vehicle {
 public:
     string type;
-    Car(string n = "A", string t = "suv") : Vehicle(n), type(t) {}
+    time_t t = std::time(0);
+    Car(string n = "A", string t = "suv") 
+        : Vehicle(n), type(t){}
     string getType();
+    time_t exitTime();
     friend class ParkingLot;
 };
 
@@ -36,21 +41,20 @@ public:
     void initialize(int numDisabled);
     bool isFull();
     int park(Car car);
-
-private:
-    // A helper function to addSpots
-    void addSpot(ParkingSpot p);
-    // A helper function to print out the available spots.
-    void printif(ParkingSpot a);
+    void exit(int ID);
+    void calculateFee(time_t t);
 
     class ParkingSpot {
     public:
         bool disabled;  // whether the spot is for people with disability.
         bool occupied;  // whether the spot is occupied.
         Car car;
+        struct printif;
     public:
         int spotID;       // the id of the spot.
         ParkingSpot(int ID, bool disabled);
+        ParkingSpot(const ParkingSpot& a); 
+        //ParkingSpot(ParkingSpot&& a);  move constructor
         // accessor
         bool getDisabled();
         bool getOccupied();
