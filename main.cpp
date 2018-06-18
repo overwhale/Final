@@ -23,7 +23,9 @@ int main(){
 
     // When c2 needs to leave, we record the duration of c2 in the parking lot.
     // And change the parking lot status accordingly.
-    auto t = c2.exitTime();
+    //cout << map.at(c2.getPlate()) <<endl; for debugging purpose
+    auto t = c2.exitTime(); 
+    //cout << t << endl;; for debugging purpose
     pl.calculateFee(t);
     pl.exit(map.at(c2.getPlate()));
     map.erase(c2.getPlate());

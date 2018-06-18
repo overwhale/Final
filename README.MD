@@ -2,7 +2,7 @@ Parking Lot
 
 Object: The goal of this project is to create a Parking Lot system, which can show how many vacant spots out there. We keep track of the parking spot number and car's plate, so that we can find either of it with the other variable. When the car exits the parking lot, the lot can adjust the status accordingly. As well as record the time that the car has been in the parking lot. 
 
-This program doesn't really compile though I have tried really hard to debug. Here are the ideas of the program:
+Here are the ideas of this program.
 
 class Car inherited from class Vehicle. Vehicle only has one member field that is the plate number. However, in the future we might need the type of the car or the size of the car to customize like normal spot and compact spot. The inheritance allow us to build based on the Vehicle. In the Car class, the member function "getPlate" is implemented, because it is what will actually be instantiated. Furthermore, for memeory management purpose, Vehicle has a virtual destructor so that when a "Car" gets destructed, we make sure that the "plate" field that it inherited from will be destroyed as well, thus avoiding potential memory leak.
 

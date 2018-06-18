@@ -24,11 +24,11 @@ bool ParkingLot::isFull() {
 void ParkingLot::initialize(int numDisabled) {
     if (numDisabled > this->compacity)
         cerr << "Warning, too many spots than what we have.";
+    int i = 1000;
     for (int t = 0; t < this->compacity; t++) {
-        int i = 1000;
         spots.emplace_back(
-            [&i](){return ParkingSpot(i++, false);}
-        );
+            //    [&i](){return ParkingSpot(i++, false);} Tried to use lambda function but didn't compile
+            ParkingSpot(i++, false));
     }
     for (auto t = spots.begin(); t != spots.begin() + numDisabled; t++) {
         (*t).setDisabled(true);
@@ -81,14 +81,14 @@ void ParkingLot::calculateFee(time_t t) {
 }
 
 ParkingLot::ParkingSpot::ParkingSpot(int id, bool disabled) :
-    disabled(false), occupied(false), car(nullptr), spotID(0) {
+    disabled(false), occupied(false), car(Car()), spotID(0) {
     this->disabled = disabled;
     occupied = false;
     spotID = id;
 }
 
 ParkingLot::ParkingSpot::ParkingSpot(const ParkingSpot& a) : 
-    disabled(false), occupied(false), car(nullptr), spotID(0) {
+    disabled(false), occupied(false), car(Car()), spotID(0) {
     this->disabled = a.disabled;
     occupied = a.occupied;
     spotID = a.spotID;
